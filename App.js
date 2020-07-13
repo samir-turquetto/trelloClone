@@ -1,21 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import TaskScreen from './src/pages/TaskScreen';
+
+const Tab = createMaterialTopTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <SafeAreaView style={{flex: 1, marginTop: 30}}>
+        <Tab.Navigator>
+          <Tab.Screen                     
+            name="A Fazer" 
+            component={TaskScreen} 
+            initialParams={{current: 'todo', next:'doing'}}
+          />
+          <Tab.Screen 
+            name="Em Andamento" 
+            component={TaskScreen} 
+            initialParams={{current: 'doing', next:'done'}}
+          />
+          <Tab.Screen 
+            name="Concluído" 
+            component={TaskScreen} 
+            initialParams={{current: 'done', next: null}}
+          />
+        </Tab.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
